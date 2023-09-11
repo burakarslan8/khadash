@@ -1,5 +1,6 @@
 
 const toggleMode = document.getElementById('auto-manual-toggle');
+let fanSpeed;
 
 fetch('/api/get-fan-mode')
     .then(response => response.json())
@@ -25,13 +26,13 @@ toggleMode.addEventListener('change', () => {
         // Manual mode is selected
         console.log('Manual mode selected');
         // Add logic for manual mode here
-        setFanModeAndSpeed('manual', 'low');
+        setFanModeAndSpeed('manual', fanSpeed);
     }
 });
 
 document.querySelectorAll('input[name="fan-speed"]').forEach(function(radio) {
     radio.addEventListener('change', function() {
-        const fanSpeed = this.value;
+        fanSpeed = this.value;
         var fanMode = 'auto';
         if(toggleMode.checked){
             fanMode='auto';

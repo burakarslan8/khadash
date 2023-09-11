@@ -95,7 +95,7 @@ app.get('/api/get-fan-mode', (req, res) => {
 });
 
 app.get('/api/get-fan-speed', (req, res) => {
-    res.json({ mode: currentFanSpeed });
+    res.json({ speed: currentFanSpeed });
 });
 
 app.post('/api/set-fan', (req, res) => {
