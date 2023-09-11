@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>My Node.js Project</title>
+        <title>Khadash - Home</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     <body>
-        <h1>Hello, World!</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/fan.html">Fan</a></li>
+                <li><a href="/docker.html">Docker</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="usage-container">
+            <div class="usage-item">
+                <h2>CPU Usage</h2>
+                <p id="cpu-usage">Loading...</p>
+            </div>
+            <div class="usage-item">
+                <h2>Memory Usage</h2>
+                <p id="memory-usage">Loading...</p>
+            </div>
+            <div class="usage-item">
+                <h2>CPU Temperature</h2>
+                <p id="cpu-temperature">Loading...</p>
+            </div>
+        </div>
+        <script src="script.js"></script>
     </body>
 </html>
