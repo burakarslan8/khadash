@@ -1,6 +1,20 @@
 
 const toggleMode = document.getElementById('auto-manual-toggle');
 
+fetch('/api/get-fan-mode')
+    .then(response => response.json())
+    .then(data => {
+        // Set the initial UI state based on the current fan mode
+        if (data.mode === 'auto') {
+            toggleMode.checked = true;
+        } else {
+            toggleMode.checked = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching fan mode:', error);
+    });
+
 toggleMode.addEventListener('change', () => {
     if (toggleMode.checked) {
         // Auto mode is selected

@@ -68,7 +68,30 @@ let currentFanMode = 'auto'; // Default to 'auto'
 let currentFanSpeed = 'low';
 
 app.get('/api/get-fan-mode', (req, res) => {
-    res.json({ mode: currentFanMode });
+    // Execute the command to get the current fan mode from your Khadas device
+    exec('fan.sh mode', (error, stdout, stderr) => {
+        if (error) {
+            console.error('Error getting fan mode:', error);
+            res.status(500).json({ error: 'Failed to get fan mode' });
+            return;
+        }
+
+        // Parse the fan mode from the output
+        const fanMode = stdout.match(/Fan mode: (.+)/);
+
+        if (fanMode && fanMode[1]) {
+            // Trim any extra whitespace from the fan mode
+            const trimmedFanMode = fanMode[1].trim();
+
+            // Determine whether the mode is "auto" or "manual"
+            const currentFanMode = trimmedFanMode.toLowerCase() === 'auto' ? 'auto' : 'manual';
+
+            res.json({ mode: currentFanMode });
+        } else {
+            console.error('Failed to parse fan mode:', stdout);
+            res.status(500).json({ error: 'Failed to parse fan mode' });
+        }
+    });
 });
 
 app.get('/api/get-fan-speed', (req, res) => {
