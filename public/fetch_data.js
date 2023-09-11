@@ -14,5 +14,5 @@ function fetchData() {
 // Fetch data initially
 fetchData();
 
-// Fetch data every 5 seconds
-setInterval(fetchData, 5000);
+// Fetch data every 3 seconds
+setInterval(fetchData, 1000);
