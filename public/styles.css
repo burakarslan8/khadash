@@ -88,3 +88,8 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:checked::after {
     left: 70%;
 }
+
+
+.mode-controls{
+    margin-bottom: 20px;
+}

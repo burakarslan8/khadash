@@ -1,15 +1,30 @@
-document.querySelectorAll('input[name="fan-mode"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-        const fanMode = this.value;
-        const fanSpeed = document.querySelector('input[name="fan-speed"]:checked').value;
-        setFanModeAndSpeed(fanMode, fanSpeed);
-    });
+
+const toggleMode = document.getElementById('auto-manual-toggle');
+
+toggleMode.addEventListener('change', () => {
+    if (toggleMode.checked) {
+        // Auto mode is selected
+        console.log('Auto mode selected');
+        // Add logic for auto mode here
+        setFanModeAndSpeed('auto', 'low');
+    } else {
+        // Manual mode is selected
+        console.log('Manual mode selected');
+        // Add logic for manual mode here
+        setFanModeAndSpeed('manual', 'low');
+    }
 });
 
 document.querySelectorAll('input[name="fan-speed"]').forEach(function(radio) {
     radio.addEventListener('change', function() {
         const fanSpeed = this.value;
-        const fanMode = document.querySelector('input[name="fan-mode"]:checked').value;
+        var fanMode = 'auto';
+        if(toggleMode.checked){
+            fanMode='auto';
+        }else{
+            fanMode='manual';
+        }
+        
         setFanModeAndSpeed(fanMode, fanSpeed);
     });
 });

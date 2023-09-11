@@ -65,9 +65,14 @@ function executeFanCommand(fanMode, command, callback) {
 
 
 let currentFanMode = 'auto'; // Default to 'auto'
+let currentFanSpeed = 'low';
 
 app.get('/api/get-fan-mode', (req, res) => {
     res.json({ mode: currentFanMode });
+});
+
+app.get('/api/get-fan-speed', (req, res) => {
+    res.json({ mode: currentFanSpeed });
 });
 
 app.post('/api/set-fan', (req, res) => {
