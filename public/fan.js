@@ -1,6 +1,6 @@
 
 const toggleMode = document.getElementById('auto-manual-toggle');
-let fanSpeed;
+let fanSpeed='low';
 
 fetch('/api/get-fan-mode')
     .then(response => response.json())
@@ -21,7 +21,7 @@ toggleMode.addEventListener('change', () => {
         // Auto mode is selected
         console.log('Auto mode selected');
         // Add logic for auto mode here
-        setFanModeAndSpeed('auto', 'low');
+        setFanModeAndSpeed('auto', null);
     } else {
         // Manual mode is selected
         console.log('Manual mode selected');
