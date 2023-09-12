@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000; // You can choose any available port
+const port = 1024; // You can choose any available port
 const bodyParser = require('body-parser');
 const { exec } = require('child_process');
 
@@ -40,12 +40,14 @@ app.get('/api/cpu-memory', (req, res) => {
 });
 
 function executeFanCommand(command, callback) {
-    exec(`fan.sh ${command}`, (error, stdout, stderr) => {
+    exec(`/usr/src/khadash/fan.sh ${command}`, (error, stdout, stderr) => {
         if (error) {
-            console.error(`Error executing fan.sh ${command}:`, error);
+            console.error(`Error executing /usr/src/khadash/fan.sh ${command}:`, error);
+            console.error('stderr:', stderr); // Log standard error
             callback(false);
         } else {
             console.log(`Fan mode set to ${command}`);
+            console.log('stdout:', stdout); // Log standard output
             callback(true);
         }
     });
@@ -56,7 +58,7 @@ let currentFanMode = 'auto'; // Default to 'auto'
 
 app.get('/api/get-fan-mode', (req, res) => {
     // Execute the command to get the current fan mode from your Khadas device
-    exec('fan.sh mode', (error, stdout, stderr) => {
+    exec('/usr/src/khadash/fan.sh mode', (error, stdout, stderr) => {
         if (error) {
             console.error('Error getting fan mode:', error);
             res.status(500).json({ error: 'Failed to get fan mode' });
@@ -81,21 +83,13 @@ app.get('/api/get-fan-mode', (req, res) => {
     });
 });
 
-app.post('/api/set-fan', (req, res) => {
+app.post('/api/set-fan-mode', (req, res) => {
     const {mode} = req.body;
 
     let command = '';
 
-    if (mode === 'auto') {
-        command = 'auto';
-        currentFanMode = 'auto'; // Update the current fan mode
-    } else if (mode === 'manual') {
-            command = mode;
-            currentFanMode = mode; // Update the current fan mode
-    } else {
-        res.status(400).json({ error: 'Invalid fan mode' });
-        return;
-    }
+    command=mode;
+    currentFanMode=mode;
 
     executeFanCommand(command, success => {
         if (success) {

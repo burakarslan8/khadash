@@ -31,7 +31,7 @@ toggleMode.addEventListener('change', () => {
 
 // Function to send fan mode and speed to the server
 function setFanMode(mode) {
-    fetch('/api/set-fan', {
+    fetch('/api/set-fan-mode', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
