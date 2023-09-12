@@ -13,10 +13,24 @@ app.listen(port, () => {
 
 const os = require('os');
 
-app.get('/api/cpu-memory', (req, res) => {
+function formatUptime(uptimeInSeconds) {
+    const hours = Math.floor(uptimeInSeconds / 3600);
+    const minutes = Math.floor((uptimeInSeconds % 3600) / 60);
+    const seconds = uptimeInSeconds % 60;
+
+    // Use padStart to ensure each part has two digits (e.g., 01 instead of 1)
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
+app.get('/api/general-info', (req, res) => {
     const cpuUsage = os.loadavg()[0];
     const totalMemory = os.totalmem();
     const freeMemory = os.freemem();
+    const uptime = os.uptime();
 
     // Calculate memory usage as a percentage
     const memoryUsage = ((totalMemory - freeMemory) / totalMemory) * 100;
@@ -34,7 +48,8 @@ app.get('/api/cpu-memory', (req, res) => {
         res.json({
             cpu: cpuUsage.toFixed(2),       // Convert to a fixed number of decimal places
             memory: memoryUsage.toFixed(2), // Convert to a fixed number of decimal places
-            temperature: cpuTemperature.toFixed(2) // Convert to a fixed number of decimal places
+            temperature: cpuTemperature.toFixed(2), // Convert to a fixed number of decimal places
+            uptime: formatUptime(uptime)
         });
     });
 });
