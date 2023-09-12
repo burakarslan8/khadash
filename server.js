@@ -39,33 +39,20 @@ app.get('/api/cpu-memory', (req, res) => {
     });
 });
 
-function executeFanCommand(fanMode, command, callback) {
-    if(fanMode==='manual'){
-        exec(`fan.sh ${fanMode}; fan.sh ${command}`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing fan.sh ${command}:`, error);
-                callback(false);
-            } else {
-                console.log(`Fan mode and speed set to ${command}`);
-                callback(true);
-            }
-        });
-    }else{
-        exec(`fan.sh ${command}`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing fan.sh ${command}:`, error);
-                callback(false);
-            } else {
-                console.log(`Fan mode and speed set to ${command}`);
-                callback(true);
-            }
-        });
-    }
+function executeFanCommand(command, callback) {
+    exec(`fan.sh ${command}`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing fan.sh ${command}:`, error);
+            callback(false);
+        } else {
+            console.log(`Fan mode set to ${command}`);
+            callback(true);
+        }
+    });
 }
 
 
 let currentFanMode = 'auto'; // Default to 'auto'
-let currentFanSpeed = 'low';
 
 app.get('/api/get-fan-mode', (req, res) => {
     // Execute the command to get the current fan mode from your Khadas device
@@ -94,12 +81,8 @@ app.get('/api/get-fan-mode', (req, res) => {
     });
 });
 
-app.get('/api/get-fan-speed', (req, res) => {
-    res.json({ speed: currentFanSpeed });
-});
-
 app.post('/api/set-fan', (req, res) => {
-    const { mode, speed } = req.body;
+    const {mode} = req.body;
 
     let command = '';
 
@@ -107,23 +90,18 @@ app.post('/api/set-fan', (req, res) => {
         command = 'auto';
         currentFanMode = 'auto'; // Update the current fan mode
     } else if (mode === 'manual') {
-        if (speed === 'low' || speed === 'mid' || speed === 'high') {
-            command = speed;
-            currentFanMode = 'manual'; // Update the current fan mode
-        } else {
-            res.status(400).json({ error: 'Invalid speed for manual mode' });
-            return;
-        }
+            command = mode;
+            currentFanMode = mode; // Update the current fan mode
     } else {
         res.status(400).json({ error: 'Invalid fan mode' });
         return;
     }
 
-    executeFanCommand(currentFanMode, command, success => {
+    executeFanCommand(command, success => {
         if (success) {
             res.json({ success: true });
         } else {
-            res.status(500).json({ error: 'Failed to set fan mode and speed' });
+            res.status(500).json({ error: 'Failed to set fan mode' });
         }
     });
 });

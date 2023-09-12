@@ -1,6 +1,5 @@
 
 const toggleMode = document.getElementById('auto-manual-toggle');
-let fanSpeed='low';
 
 fetch('/api/get-fan-mode')
     .then(response => response.json())
@@ -21,37 +20,23 @@ toggleMode.addEventListener('change', () => {
         // Auto mode is selected
         console.log('Auto mode selected');
         // Add logic for auto mode here
-        setFanModeAndSpeed('auto', null);
+        setFanMode('auto', null);
     } else {
         // Manual mode is selected
         console.log('Manual mode selected');
         // Add logic for manual mode here
-        setFanModeAndSpeed('manual', fanSpeed);
+        setFanMode('manual');
     }
 });
 
-document.querySelectorAll('input[name="fan-speed"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-        fanSpeed = this.value;
-        var fanMode = 'auto';
-        if(toggleMode.checked){
-            fanMode='auto';
-        }else{
-            fanMode='manual';
-        }
-        
-        setFanModeAndSpeed(fanMode, fanSpeed);
-    });
-});
-
 // Function to send fan mode and speed to the server
-function setFanModeAndSpeed(mode, speed) {
+function setFanMode(mode) {
     fetch('/api/set-fan', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ mode, speed })
+        body: JSON.stringify({mode})
     })
         .then(response => response.json())
         .then(data => {

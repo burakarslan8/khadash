@@ -89,11 +89,6 @@ input[type="checkbox"]:checked::after {
     left: 70%;
 }
 
-
-.mode-controls{
-    margin-bottom: 20px;
-}
-
 .fan-control{
     text-align: center;
     margin: 0 auto;
@@ -104,8 +99,4 @@ input[type="checkbox"]:checked::after {
     display:inline-block;
     margin: 0 auto;
     margin-top: 300px;
-}
-
-.speed-controls{
-    margin-top:30px;
 }
