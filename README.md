@@ -11,28 +11,17 @@ Monitoring tool & dashboard for Khadas VIM3 devices
 - Khadas VIM3 SBC
 
 ## Installation
-
-1. Clone the repository:
+1. Pull the Docker image:
 ```
-git clone https://github.com/burakarslan8/khadash.git
-```
-
-2. Navigate to the project directory:
-```
-cd khadash
+docker pull burakarslan8/khadash
 ```
 
-3. Build the Docker image:
+2. Run the Docker container with the following arguments:
 ```
-docker build -t khadash .
-```
-
-4. Run the Docker container with the following arguments:
-```
-docker run -d -p 1024:1024 --restart always --privileged khadash
+docker run -d -p 1024:1024 --restart always --privileged burakarslan8/khadash
 ```
 
-5. The dashboard should now be accessible at:
+3. The dashboard should now be accessible at:
 ```
 http://localhost:1024
 ```
