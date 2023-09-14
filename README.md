@@ -4,6 +4,8 @@ Monitoring tool & dashboard for Khadas VIM3 devices
 
 > Note: Khadash is currently in development and may not be entirely stable. If you encounter issues or have suggestions for improvement, please feel free to [report them](https://github.com/burakarslan8/khadash/issues). Your feedback is important!
 
+> Note: If you would like to use Khadash outside of your home network, you can create a [TwinGate](https://www.twingate.com/) connector in your Khadas.
+
 
 ## Prerequisites
 - Node.js
