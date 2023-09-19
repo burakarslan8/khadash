@@ -1,0 +1,12 @@
+[Unit]
+Description = Fan Control Service
+
+[Service]
+Environment = "TRIG_TEMP=35" 
+ExecStart = /home/whxper/trig_temp.sh $TRIG_TEMP
+Restart = always
+User = whxper
+Group = sudo
+
+[Install]
+WantedBy = multi-user.target
