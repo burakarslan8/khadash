@@ -55,7 +55,7 @@ app.get('/api/general-info', (req, res) => {
 });
 
 function executeFanCommand(command, callback) {
-    exec(`/usr/src/khadash/fan.sh ${command}`, (error, stdout, stderr) => {
+    exec(`fan.sh ${command}`, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error executing /usr/src/khadash/fan.sh ${command}:`, error);
             console.error('stderr:', stderr); // Log standard error
@@ -73,7 +73,7 @@ let currentFanMode = 'auto'; // Default to 'auto'
 
 app.get('/api/get-fan-mode', (req, res) => {
     // Execute the command to get the current fan mode from your Khadas device
-    exec('/usr/src/khadash/fan.sh mode', (error, stdout, stderr) => {
+    exec('fan.sh mode', (error, stdout, stderr) => {
         if (error) {
             console.error('Error getting fan mode:', error);
             res.status(500).json({ error: 'Failed to get fan mode' });
