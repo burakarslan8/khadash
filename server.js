@@ -16,7 +16,7 @@ const os = require('os');
 function formatUptime(uptimeInSeconds) {
     const hours = Math.floor(uptimeInSeconds / 3600);
     const minutes = Math.floor((uptimeInSeconds % 3600) / 60);
-    const seconds = uptimeInSeconds % 60;
+    const seconds = Math.round(uptimeInSeconds % 60);
 
     // Use padStart to ensure each part has two digits (e.g., 01 instead of 1)
     const formattedHours = hours.toString().padStart(2, '0');
